@@ -1,0 +1,203 @@
+{\rtf1\ansi\ansicpg1252\cocoartf949\cocoasubrtf460
+{\fonttbl\f0\fnil\fcharset0 Monaco;}
+{\colortbl;\red255\green255\blue255;\red191\green0\blue0;\red0\green0\blue191;\red0\green115\blue0;
+\red96\green96\blue96;}
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f0\fs34 \cf2 // Sketches aus dem Kurs 'Audiovisual Programming' \cf0 \
+\cf2 // (F. Olofsson)\cf0 \
+\
+\cf2 // Andr\uc0\u8730 \'a9 Hostal\u8730 \'b0cio Wakko (www.andrewakko.com)\
+
+\fs30 // my lovely lynch // random interpolation of feelings // Russell's paradox band\
+// duration : without end, unboundedness, infinitas // until you feel tired and sleep.\
+\
+// (sound only)\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\fs18 \cf0 (
+\fs24 \
+s.volume.volume_(0);\
+\
+z= 1;   \cf2 //add argument for delay\cf0 \
+p= 1;\
+\
+\cf2 // define a --------------------------\cf0 \
+(\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf3 Ndef\cf0 (\cf4 \\a\cf0 , \{\
+m = \cf3 Mix\cf0 .fill(10, \{ \cf3 SinOsc\cf0 .ar(100 + 200.0.rand, 0, 0.05) \});\
+p = \cf3 Decay2\cf0 .ar(\cf3 Dust\cf0 .ar(0.9,0.5),\
+       0.01,\
+       0.2,\
+       \cf3 Saw\cf0 .ar(100 + [0, 1]));\
+4.do \{ \cf3 |i|\cf0 \
+p = \cf3 DelayN\cf0 .ar(\cf3 RLPF\cf0 .ar(p, \cf3 Rand\cf0 (100, 400), 0.03), 1, 1 / (2**i), 1, z * 0.5) \};\
+y = \cf3 Mix\cf0 .ar(\cf3 Array\cf0 .fill(2,\{ \cf3 CombL\cf0 .ar(m, 0.1, \cf3 LFNoise1\cf0 .kr(0.001.rand, 0.04, 0.05), 25) \}));\
+d = \cf3 DelayN\cf0 .ar([m,m], 0.048,0.005)*z;\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf2 // equacao dos synth\cf0 \
+d+m+(0.2*y);\
+\}\
+)\
+);      \cf2 //missing semicolon\cf0 \
+\
+\cf2 //----------------------------------------------\cf0 \
+\cf2 // define b --------------------------\cf0 \
+(\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf3 Ndef\cf0 (\cf4 \\b\cf0 , \{\
+m = \cf3 Mix\cf0 .fill(10, \{ \cf3 SinOsc\cf0 .ar(100 + 200.0.rand, 0, 0.05) \});\
+p = \cf3 Decay2\cf0 .ar(\cf3 Dust\cf0 .ar(0.9,0.5),\
+       0.01,\
+       0.2,\
+       \cf3 Saw\cf0 .ar(100 + [0, 1]));\
+4.do \{ \cf3 |i|\cf0 \
+p = \cf3 DelayN\cf0 .ar(\cf3 RLPF\cf0 .ar(p, \cf3 Rand\cf0 (100, 400), 0.03), 1, 1 / (2**i), 1, z * 0.5) \};\
+y = \cf3 Mix\cf0 .ar(\cf3 Array\cf0 .fill(2,\{ \cf3 CombL\cf0 .ar(m, 0.1, \cf3 LFNoise1\cf0 .kr(0.001.rand, 0.04, 0.05), 25) \}));\
+d = \cf3 DelayN\cf0 .ar([m,m], 0.048,0.005);\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf2 // equacao dos synth\cf0 \
+m+(0.2*y);\
+\}\
+)\
+);      \cf2 //missing semicolon\cf0 \
+\
+\cf2 // define c --------------------------\cf0 \
+(\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf3 Ndef\cf0 (\cf4 \\c\cf0 ,\{ \
+	\cf3 var\cf0  s;\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf2 // 10 voices of a random sine percussion sound\cf0 \
+\cf2 // como colocar a voz em uma variante x que triga com a entrada de audio do solar: \cf0 \
+s = \cf3 Mix\cf0 .ar(\cf3 Array\cf0 .fill(5 , \{ \cf3 Resonz\cf0 .ar(\cf3 Dust\cf0 .ar(0.2, 50), 200 + 3000.0.rand, 0.003)\}) ); \
+\cf2 // reverb predelay time : \cf0 \
+z = \cf3 DelayN\cf0 .ar(s, 0.048); \
+\cf2 // 7 length modulated comb delays in parallel : \cf0 \
+y = \cf3 Mix\cf0 .ar(\cf3 Array\cf0 .fill(40,\{ \cf3 CombL\cf0 .ar(z, 0.1, \cf3 LFNoise1\cf0 .kr(0.001.rand, 0.04, 0.05), 25) \}));  \
+\cf2 // two parallel chains of 4 allpass delays (8 total) : \cf0 \
+4.do(\{ y = \cf3 AllpassN\cf0 .ar(y, 0.050, [0.050.rand, 0.050.rand], 1) \}); \
+1.do(\{ z = \cf3 AllpassL\cf0 .ar(z, 0.0005, [-0.050.rand, -0.050.rand], 0.0005) \}); \
+\cf2 // add original sound to reverb and play it : \cf0 \
+s+(0.2*y) \
+\});  \cf2 //missing semicolon\cf0 \
+);\
+\
+\cf2 // define  feed ----------------------------------------\cf0 \
+\
+(\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf3 SynthDef\cf0 (\cf5 "feed09"\cf0 , \{\cf3 |freq= 600, amp= 0.4,fb= 0.9, atk= 0.7, rel= 0.5, delayTime= 0.01, cutoff= 100, pitch=0.1|\cf0 \
+	\cf3 var\cf0  env, src, local;\
+	local= \cf3 DelayN\cf0 .ar(\cf3 LocalIn\cf0 .ar(1),1, delayTime);\
+	\cf2 //fb= PitchShift.ar(LPF.ar(DelayN.ar(LocalIn.ar(1), 1, delaytime), cutoff), 5, pitch); // plus functions\cf0 \
+	env= \cf3 EnvGen\cf0 .ar(\cf3 Env\cf0 .perc(atk,rel), doneAction:2);\
+	src= \cf3 SinOsc\cf0 .ar(	 \
+	local*fb,\cf3 SinOsc\cf0 .ar(freq,0,2pi),amp*env); \cf2 // math sound source\cf0 \
+	\cf3 Out\cf0 .ar(0, \cf3 Pan2\cf0 .ar(src,0));\cf2 //output to speakers\cf0 \
+	\cf3 LocalOut\cf0 .ar(src); \cf2 // output to locatin in\cf0 \
+	\
+	\}).memStore; \cf2 // tell the sequencer arguments\cf0 \
+);	\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf2 // define feed sequencer\cf0 \
+\
+(\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf3 Pdef\cf0 (\cf4 \\seq\cf0 , \
+\cf3 Pbind\cf0 (\cf4 \\instrument\cf0 , \cf5 "feed09"\cf0 , \
+\cf4 \\freq\cf0 , \cf3 Pseq\cf0 ([rand(64,1280),rand(64,1280),rand(564,1208),rand(564,1280),\cf3 Prand\cf0 ([500,700,900,200],1)],\cf3 inf\cf0 ),\
+\cf4 \\dur\cf0 , \cf3 Pseq\cf0 ([0.2,0.95,0.5,0.75,\cf3 Prand\cf0 ([0.7,0.7,0.9,0.7],1)],\cf3 inf\cf0 ),\
+\cf4 \\amp\cf0 , 0.010, \
+\cf4 \\delayTime\cf0 , 0.01, \
+\cf4 \\rel\cf0 , 0.05,\
+\cf4 \\fb\cf0 , \cf3 Pseq\cf0 ([100,25,50,250,900],\cf3 inf\cf0 )\
+))\
+);\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf2 //Pdef(\\seq).play; \cf0 \
+\
+\cf2 // run // my lov david lynch. // random interpolation of feelings\cf0 \
+\
+(\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf3 Tdef\cf0 (\cf4 \\run\cf0 , \{\
+loop\{\
+	\
+	\cf3 Ndef\cf0 (\cf4 \\a\cf0 ).play; \cf2 //intro\cf0 \
+	10.wait;\
+	\cf3 Ndef\cf0 (\cf4 \\c\cf0 ).fadeTime = 9;\
+	9.wait;\
+	\cf2 //Ndef(\\c).stop;\cf0 \
+	\cf3 Ndef\cf0 (\cf4 \\b\cf0 ).stop;\
+\
+	\cf3 Ndef\cf0 (\cf4 \\b\cf0 ).play;  \cf2 // respiro // breath\cf0 \
+	\cf3 Pdef\cf0 (\cf4 \\seq\cf0 ).stop;\
+	5.wait;\
+	\cf3 Ndef\cf0 (\cf4 \\a\cf0 ).stop;\
+	\cf3 Ndef\cf0 (\cf4 \\c\cf0 ).fadeTime = 8;\
+	8.wait;\
+	\cf3 Ndef\cf0 (\cf4 \\c\cf0 ).stop; \
+\
+	\cf3 Ndef\cf0 (\cf4 \\x\cf0 , \{\cf3 Blip\cf0 .ar([2,1]*rand(200,500),7100)*0.1\}).play; \cf2 // question\cf0 \
+	5.wait;\
+	\cf3 Ndef\cf0 (\cf4 \\a\cf0 ).play;\
+	\cf3 Ndef\cf0 (\cf4 \\x\cf0 ).fadeTime = 9;\
+	10.wait;\
+	\cf3 Ndef\cf0 (\cf4 \\x\cf0 ).stop;\
+	5.wait;\
+\
+	\
+	5.wait;\
+	\cf3 Pdef\cf0 (\cf4 \\seq\cf0 ).play;  \cf2 // signals\cf0 \
+	rand(60,100).wait;\
+\
+	\cf3 Ndef\cf0 (\cf4 \\c\cf0 ).play; \cf2 // transmition connected\cf0 \
+	2.wait;\
+	\cf3 Ndef\cf0 (\cf4 \\c\cf0 ).play;\
+	2.wait;\
+	\cf3 Ndef\cf0 (\cf4 \\c\cf0 ).play;\
+	1.wait;\
+	\cf3 Ndef\cf0 (\cf4 \\c\cf0 ).play;\
+	\
+\
+	\cf3 Pdef\cf0 (\cf4 \\seq\cf0 ).play; \
+	1.wait;\
+	\cf3 Pdef\cf0 (\cf4 \\seq\cf0 ).play;\
+	1.wait;\
+	\cf3 Pdef\cf0 (\cf4 \\seq\cf0 ).play;\
+\
+	\cf3 Ndef\cf0 (\cf4 \\c\cf0 ).stop;\
+	1.wait;\
+	\cf3 Ndef\cf0 (\cf4 \\a\cf0 ).stop;\
+	5.wait;\
+	\cf3 Pdef\cf0 (\cf4 \\seq\cf0 ).stop;\
+	2.wait;\
+	\cf3 Pdef\cf0 (\cf4 \\seq\cf0 ).stop;	\
+	1.wait;\
+	\cf3 Pdef\cf0 (\cf4 \\seq\cf0 ).stop;\
+\
+	\cf3 Ndef\cf0 (\cf4 \\c\cf0 ).play;\
+	40.wait;\
+	\cf2 //Pdef(\\seq).play;\cf0 \
+	\cf2 //10.wait;\cf0 \
+	\cf2 //Pdef(\\seq).stop;\cf0 \
+	\
+       \
+\}\
+\}).play;\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf2 //Ndef(\\a).play;\cf0 \
+\cf2 //Ndef(\\b).play;\cf0 \
+\cf2 //Ndef(\\c).play;\cf0 \
+\cf2 //thisProcess.platform.recordingsDir;\cf0 \
+)\
+\
+\cf2 //----------------\cf0 \
+\
+
+\fs18 )\
+                                  }

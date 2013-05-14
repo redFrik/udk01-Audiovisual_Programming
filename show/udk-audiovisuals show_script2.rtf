@@ -1,0 +1,59 @@
+{\rtf1\ansi\ansicpg1252\cocoartf949\cocoasubrtf460
+{\fonttbl\f0\fnil\fcharset0 Monaco;}
+{\colortbl;\red255\green255\blue255;\red191\green0\blue0;\red0\green0\blue0;\red0\green0\blue191;
+\red96\green96\blue96;}
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f0\fs18 \cf2 //script to show pieces/sketches /f0\cf3 \
+\cf2 //stop with cmd+.\cf3 \
+\
+(\
+s.waitForBoot\{\
+\
+	\cf2 //--settings\cf3 \
+	\cf4 var\cf3  path= \cf5 "~/udk/*"\cf3 ;				\cf2 //folder with pieces to run\cf3 \
+	\cf4 var\cf3  defaultTime= 20;				\cf2 //duration per piece in seconds\cf3 \
+	\cf4 var\cf3  bounds= \cf4 Rect\cf3 (500, 60, 800, 800);	\cf2 //document position and size\cf3 \
+	\cf4 var\cf3  fixedTimes= [					\cf2 //array of filenames that needs a fixed duration\cf3 \
+		\cf5 "andre_1001.scd"\cf3  -> 240			\cf2 //filename, seconds\cf3 \
+	];\
+	\
+	\cf2 //--loop\cf3 \
+	\cf4 Task\cf3 (\{\
+		\cf4 var\cf3  time;\
+		\cf4 var\cf3  files= path.standardizePath.pathMatch.scramble;\
+		files.postln;\
+		\cf4 inf\cf3 .do\{\cf4 |i|\cf3 \
+			\
+			\cf2 //--load\cf3 \
+			\cf4 var\cf3  doc= \cf4 Document\cf3 .open(files.wrapAt(i));\
+			doc.bounds= bounds;\
+			(\cf4 Date\cf3 .localtime.asString+doc.name).postln;\
+			0.5.wait;\
+			doc.selectRange(0, doc.string.size);\
+			0.5.wait;\
+			\
+			\cf2 //--run\cf3 \
+			doc.string.interpret;\
+			\
+			\cf2 //--time\cf3 \
+			time= defaultTime;\
+			fixedTimes.do\{\cf4 |x|\cf3 \
+				doc.path.basename;\
+				if(x.key==doc.path.basename, \{\
+					time= x.value;\
+				\});\
+			\};\
+			(\cf5 "time"\cf3 +time).postln;\
+			time.wait;\
+			\
+			\cf2 //--stop\cf3 \
+			\cf4 thisProcess\cf3 .stop;\
+			\cf4 Window\cf3 .allWindows.reject\{\cf4 |x|\cf3  x.name.contains(\cf5 " server"\cf3 )\}.do\{\cf4 |x|\cf3  x.close\};\
+			doc.close;\
+			0.5.wait;\
+		\}\
+	\}).play(\cf4 AppClock\cf3 );\
+\};\
+)\
+}

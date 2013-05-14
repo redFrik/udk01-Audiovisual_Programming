@@ -1,4 +1,4 @@
 udk-avprogramming
 =================
 
-UdK audiovisual programming class resources 2009-...
+UdK audiovisual programming class resources 2009_SS

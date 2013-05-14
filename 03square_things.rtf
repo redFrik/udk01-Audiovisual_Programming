@@ -1,0 +1,480 @@
+{\rtf1\ansi\ansicpg1252\cocoartf949\cocoasubrtf460
+{\fonttbl\f0\fnil\fcharset0 Monaco;}
+{\colortbl;\red255\green255\blue255;\red191\green0\blue0;\red0\green0\blue0;\red0\green0\blue191;
+\red96\green96\blue96;\red0\green115\blue0;}
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+
+\f0\fs40 \cf2 //udk may-jul 2009 / f@fredrikolofsson.com\cf3 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf2 //090625\cf3 \
+\
+\
+\cf2 //----------------------\cf3 \
+\cf2 /*\
+the Rect class...\
+Rect(x, y, width, height)\
+\
+a= Rect(100, 300, 640, 480)\
+a+10\
+a+Rect(1, 2, 30, 40)\
+*/\cf3 \
+\
+\
+(\
+\cf4 var\cf3  win, usr, width= 400, height= 400;\
+win= \cf4 Window\cf3 (\cf5 "rect0"\cf3 , \cf4 Rect\cf3 (100, 200, width, height));\
+usr= \cf4 UserView\cf3 (win, \cf4 Rect\cf3 (0, 0, width, height));\
+usr.background= \cf4 Color\cf3 (0.4, 0.1, 0.6);\
+\
+usr.drawFunc= \{\
+	\cf4 Pen\cf3 .strokeColor= \cf4 Color\cf3 .white;\
+	\cf4 Pen\cf3 .strokeRect(\cf4 Rect\cf3 (10, 20, 30, 40));\
+\};\
+\
+win.front;\
+)\
+\
+\
+\
+\cf2 //iteration\cf3 \
+(\
+\cf4 var\cf3  win, usr, width= 400, height= 400;\
+win= \cf4 Window\cf3 (\cf5 "rect1"\cf3 , \cf4 Rect\cf3 (100, 200, width, height));\
+usr= \cf4 UserView\cf3 (win, \cf4 Rect\cf3 (0, 0, width, height));\
+usr.background= \cf4 Color\cf3 (0.4, 0.1, 0.6);\
+\
+usr.drawFunc= \{\
+	\cf2 //40 rectangles at random positions\cf3 \
+	40.do\{\
+		\cf4 Pen\cf3 .strokeColor= \cf4 Color\cf3 .white;\
+		\cf4 Pen\cf3 .strokeRect(\cf4 Rect\cf3 (width.rand, height.rand, 30, 40));\
+	\};\
+\};\
+\
+win.front;\
+)\
+\
+\
+\
+\
+\
+\cf2 //modulo\cf3 \
+(\
+\cf4 var\cf3  win, usr, width= 400, height= 400;\
+win= \cf4 Window\cf3 (\cf5 "rect2"\cf3 , \cf4 Rect\cf3 (100, 200, width, height));\
+usr= \cf4 UserView\cf3 (win, \cf4 Rect\cf3 (0, 0, width, height));\
+usr.background= \cf4 Color\cf3 (0.4, 0.1, 0.6);\
+\
+usr.drawFunc= \{\
+	\cf2 //45 rectangles evenly spaces\cf3 \
+	45.do\{\cf4 |index|\cf3 \
+		\cf4 Pen\cf3 .strokeColor= \cf4 Color\cf3 .white;\
+		\cf4 Pen\cf3 .strokeRect(\cf4 Rect\cf3 (index%10*33, index.div(10)*23, 30, 20));\
+	\};\
+\};\
+\
+win.front;\
+)\
+\
+\
+\cf2 //combination of modulo (%) and integer division (.div)\cf3 \
+\cf2 //very common to use for grids\cf3 \
+\
+\cf2 //if modulo 4 then the first number never goes above 3\cf3 \
+3%4\
+4%4\
+5%4\
+6%4\
+\cf2 //now try with %5\cf3 \
+\
+\cf2 //integer division\cf3 \
+3.div(4)\
+4.div(4)\
+5.div(4)\
+6.div(4)\
+\cf2 //now try with .div(5)\cf3 \
+\
+\cf2 //compare with standard (float) division\cf3 \
+3/4\
+4/4\
+5/4\
+6/4\
+\
+\
+\
+\
+(\
+\cf4 var\cf3  win, usr, width= 400, height= 400;\
+win= \cf4 Window\cf3 (\cf5 "rect3"\cf3 , \cf4 Rect\cf3 (100, 200, width, height));\
+usr= \cf4 UserView\cf3 (win, \cf4 Rect\cf3 (0, 0, width, height));\
+usr.background= \cf4 Color\cf3 (0.4, 0.1, 0.6);\
+\
+usr.drawFunc= \{\
+	64.do\{\cf4 |index|\cf3 \
+		\cf4 Pen\cf3 .strokeColor= \cf4 Color\cf3 .white;\
+		\cf4 Pen\cf3 .strokeRect(\cf4 Rect\cf3 (index%12*33, index.div(6)*23, 30, 20));\
+		\
+		\cf2 //64 is total number of rectangles\cf3 \
+		\cf2 //30 is rectangle width\cf3 \
+		\cf2 //20 is rectangle height\cf3 \
+		\cf2 //33 is rectangle spacing per row (x)\cf3 \
+		\cf2 //23 is rectangle spacing per column (y)\cf3 \
+		\cf2 //12 is number of rectangles per row\cf3 \
+		\cf2 //6 is number of rectangles per column\cf3 \
+	\};\
+\};\
+\
+win.front;\
+)\
+\cf2 //try changing all these numbers and insert modulo here and there\cf3 \
+\
+\
+\
+\cf2 //fill vs stroke\cf3 \
+(\
+\cf4 var\cf3  win, usr, width= 400, height= 400;\
+win= \cf4 Window\cf3 (\cf5 "rect4"\cf3 , \cf4 Rect\cf3 (100, 200, width, height));\
+usr= \cf4 UserView\cf3 (win, \cf4 Rect\cf3 (0, 0, width, height));\
+usr.background= \cf4 Color\cf3 (0.4, 0.1, 0.6);\
+\
+usr.drawFunc= \{\
+	64.do\{\cf4 |index|\cf3 \
+		if(index%3==0, \{		\cf2 //stroke every third\cf3 \
+			\cf4 Pen\cf3 .strokeColor= \cf4 Color\cf3 .white;\
+			\cf4 Pen\cf3 .strokeRect(\cf4 Rect\cf3 (index%12*33, index.div(6)*23, 30, 20));\
+		\}, \{		\cf2 //fill the rest\cf3 \
+			\cf4 Pen\cf3 .fillColor= \cf4 Color\cf3 .white;\
+			\cf4 Pen\cf3 .fillRect(\cf4 Rect\cf3 (index%12*33, index.div(6)*23, 30, 20));\
+		\});\
+	\};\
+\};\
+\
+win.front;\
+)\
+\
+\
+\
+\
+\cf2 //--------------------\cf3 \
+\
+\cf2 //to use the scope, first click ->default and then boot on internal server window\cf3 \
+s.scope\
+\
+\cf2 //pulse/square waves\cf3 \
+(\
+	\cf4 SynthDef\cf3 (\cf5 "pulse0"\cf3 , \{\
+		\cf4 var\cf3  snd;\
+		snd= \cf4 LFPulse\cf3 .ar(800, 0, 0.2) * \cf4 LFPulse\cf3 .ar(2, 0, 0.8);\
+		\cf4 Out\cf3 .ar(0, \cf4 Pan2\cf3 .ar(snd, 0));\
+	\}).send(s);\
+)\
+a= \cf4 Synth\cf3 (\cf5 "pulse0"\cf3 )\
+a.free\
+\
+\
+\cf2 //with a low-pass filter (LPF - only lets low frequencies pass)\cf3 \
+\cf2 //sound gets smoother and less bright\cf3 \
+(\
+	\cf4 SynthDef\cf3 (\cf5 "pulse1"\cf3 , \{\
+		\cf4 var\cf3  snd, filter;\
+		snd= \cf4 LFPulse\cf3 .ar(800, 0, 0.2) * \cf4 LFPulse\cf3 .ar(2, 0, 0.8);\
+		filter= \cf4 LPF\cf3 .ar(snd, 1000);\
+		\cf4 Out\cf3 .ar(0, \cf4 Pan2\cf3 .ar(filter, 0));\
+	\}).send(s);\
+)\
+a= \cf4 Synth\cf3 (\cf5 "pulse1"\cf3 )\
+a.free\
+\
+\cf2 //using another pulse to control filter frequency (cutoff freq)\cf3 \
+(\
+	\cf4 SynthDef\cf3 (\cf5 "pulse2"\cf3 , \{\
+		\cf4 var\cf3  snd, filter;\
+		snd= \cf4 LFPulse\cf3 .ar(400, 0, 0.2) * \cf4 LFPulse\cf3 .ar(0.5, 0, 0.8);\
+		filter= \cf4 LPF\cf3 .ar(snd, \cf4 LFPulse\cf3 .ar(3)*2700+600);\cf2 //low-pass filter\cf3 \
+		\cf4 Out\cf3 .ar(0, \cf4 Pan2\cf3 .ar(filter, 0));\
+	\}).send(s);\
+)\
+a= \cf4 Synth\cf3 (\cf5 "pulse2"\cf3 )\
+a.free\
+\
+\
+\cf2 //another type of filter and also controlling snd freq with a pulse\cf3 \
+(\
+	\cf4 SynthDef\cf3 (\cf5 "pulse3"\cf3 , \{\
+		\cf4 var\cf3  snd, filter;\
+		snd= \cf4 LFPulse\cf3 .ar(\cf4 LFPulse\cf3 .ar(8)*200+400, 0, 0.2) * \cf4 LFPulse\cf3 .ar(0.5, 0, 0.8);\
+		filter= \cf4 MoogFF\cf3 .ar(snd, \cf4 LFPulse\cf3 .ar(3)*2700+600);\cf2 //low-pass filter\cf3 \
+		\cf4 Out\cf3 .ar(0, \cf4 Pan2\cf3 .ar(filter, 0));\
+	\}).send(s);\
+)\
+a= \cf4 Synth\cf3 (\cf5 "pulse3"\cf3 )\
+a.free\
+\
+\
+\
+\cf2 //many more pulses as controllers\cf3 \
+(\
+	\cf4 SynthDef\cf3 (\cf5 "pulse4"\cf3 , \{\
+		\cf4 var\cf3  snd, filter, gater, freaker, higher;\
+		gater= \cf4 LFPulse\cf3 .ar(5)*0.5+1;\
+		freaker= \cf4 LFPulse\cf3 .ar(0.25)*20+8;\
+		higher= \cf4 LFPulse\cf3 .ar(0.2)*200+300;\
+		snd= \cf4 LFPulse\cf3 .ar(\cf4 LFPulse\cf3 .ar(freaker)*higher+400, 0, 0.2) * \cf4 LFPulse\cf3 .ar(gater, 0, 0.8);\
+		filter= \cf4 MoogFF\cf3 .ar(snd, \cf4 LFPulse\cf3 .ar(3)*2700+600);\cf2 //low-pass filter\cf3 \
+		\cf4 Out\cf3 .ar(0, \cf4 Pan2\cf3 .ar(filter, 0));\
+	\}).send(s);\
+)\
+a= \cf4 Synth\cf3 (\cf5 "pulse4"\cf3 )\
+a.free\
+\
+\
+\
+\cf2 //adding 3 arguments\cf3 \
+(\
+	\cf4 SynthDef\cf3 (\cf5 "pulse5"\cf3 , \{\cf4 |baseFreq= 400, baseRate= 20, width= 0.2|\cf3 \
+		\cf4 var\cf3  snd, filter, gater, freaker, higher;\
+		gater= \cf4 LFPulse\cf3 .ar(5)*0.5+1;\
+		freaker= \cf4 LFPulse\cf3 .ar(0.25)*baseRate+8;\
+		higher= \cf4 LFPulse\cf3 .ar(0.2)*200+300;\
+		snd= \cf4 LFPulse\cf3 .ar(\cf4 LFPulse\cf3 .ar(freaker)*higher+baseFreq, 0, width) * \cf4 LFPulse\cf3 .ar(gater, 0, 0.8);\
+		filter= \cf4 MoogFF\cf3 .ar(snd, \cf4 LFPulse\cf3 .ar(3)*2700+600);\
+		\cf4 Out\cf3 .ar(0, \cf4 Pan2\cf3 .ar(filter, 0));\
+	\}).send(s);\
+)\
+a= \cf4 Synth\cf3 (\cf5 "pulse5"\cf3 )\
+a.set(\cf6 \\baseFreq\cf3 , 100)\
+a.set(\cf6 \\baseFreq\cf3 , 200)\
+a.set(\cf6 \\baseFreq\cf3 , 300)\
+a.set(\cf6 \\width\cf3 , 0.8)\
+a.set(\cf6 \\width\cf3 , 0.1)\
+a.set(\cf6 \\baseRate\cf3 , 12)\
+a.set(\cf6 \\baseRate\cf3 , 70)\
+a.free\
+\
+\
+\
+\
+\
+\cf2 //---------------------------\cf3 \
+(\
+\cf4 var\cf3  win, usr, width= 500, height= 400, cnt= 0;\
+win= \cf4 Window\cf3 (\cf5 "more rects0"\cf3 , \cf4 Rect\cf3 (200, 200, width, height));\
+usr= \cf4 UserView\cf3 (win, \cf4 Rect\cf3 (0, 0, width, height));\
+usr.background= \cf4 Color\cf3 .white;\
+usr.drawFunc= \{\
+	50.do\{\cf4 |x|\cf3 \
+		20.do\{\cf4 |y|\cf3 \
+			\cf4 Pen\cf3 .strokeColor= \cf4 Color\cf3 .grey(0.5);\
+			\cf4 Pen\cf3 .strokeRect(\cf4 Rect\cf3 (x*10, y*7, 6, 5));\
+		\};\
+	\};\
+\};\
+win.front;\
+)\
+\
+\
+\cf2 //\cf3 \
+(\
+\cf4 var\cf3  win, usr, width= 500, height= 400, cnt= 0;\
+win= \cf4 Window\cf3 (\cf5 "more rects1"\cf3 , \cf4 Rect\cf3 (200, 200, width, height));\
+usr= \cf4 UserView\cf3 (win, \cf4 Rect\cf3 (0, 0, width, height));\
+usr.background= \cf4 Color\cf3 .white;\
+usr.drawFunc= \{\
+	50.do\{\cf4 |x|\cf3 \
+		20.do\{\cf4 |y|\cf3 \
+			\cf4 Pen\cf3 .strokeColor= \cf4 Color\cf3 .grey(x%50/50);\
+			\cf4 Pen\cf3 .strokeRect(\cf4 Rect\cf3 (x*10, y*7, 6, 5));\
+		\};\
+	\};\
+\};\
+win.front;\
+)\
+\
+\
+(\
+\cf4 var\cf3  win, usr, width= 500, height= 400, cnt= 0;\
+win= \cf4 Window\cf3 (\cf5 "more rects2"\cf3 , \cf4 Rect\cf3 (200, 200, width, height));\
+usr= \cf4 UserView\cf3 (win, \cf4 Rect\cf3 (0, 0, width, height));\
+usr.background= \cf4 Color\cf3 .white;\
+usr.drawFunc= \{\
+	50.do\{\cf4 |x|\cf3 \
+		20.do\{\cf4 |y|\cf3 \
+			\cf4 Pen\cf3 .strokeColor= \cf4 Color\cf3 .grey(cnt/150);\
+			\cf4 Pen\cf3 .strokeRect(\cf4 Rect\cf3 (x*10+cnt%width, y*7, 6, 5));\
+		\};\
+	\};\
+	cnt= cnt+1%150;	\cf2 //wrap conter 0-149\cf3 \
+\};\
+win.front;\
+\
+\cf4 Routine\cf3 (\{while(\{win.isClosed.not\}, \{usr.refresh; (1/30).wait\})\}).play(\cf4 AppClock\cf3 );\
+)\
+\
+\
+\
+\cf2 //--\cf3 \
+(\
+\cf4 var\cf3  win, usr, width= 500, height= 400, cnt= 0;\
+win= \cf4 Window\cf3 (\cf5 "structure0"\cf3 , \cf4 Rect\cf3 (200, 200, width, height));\
+usr= \cf4 UserView\cf3 (win, \cf4 Rect\cf3 (0, 0, width, height));\
+usr.background= \cf4 Color\cf3 .white;\
+usr.drawFunc= \{\
+	50.do\{\cf4 |x|\cf3 \
+		20.do\{\cf4 |y|\cf3 \
+			\cf4 Pen\cf3 .strokeColor= \cf4 Color\cf3 .grey(cnt/150);\
+			\cf4 Pen\cf3 .strokeRect(\cf4 Rect\cf3 (x*10+cnt%width, y+x*7, 6*cnt%8, 50));\
+		\};\
+	\};\
+	cnt= cnt+1%150;	\cf2 //wrap conter 0-149\cf3 \
+\};\
+win.front;\
+\
+\cf4 Routine\cf3 (\{while(\{win.isClosed.not\}, \{usr.refresh; (1/30).wait\})\}).play(\cf4 AppClock\cf3 );\
+)\
+\
+\
+\cf2 //draw 2 rectangles at the same time.  one filled and one stroked\cf3 \
+~haha= 30;		\cf2 //use environmental variable to change on the fly\cf3 \
+~spread= 10;	\cf2 //no need to declare but needs to initialise to some values\cf3 \
+\
+(\
+\cf4 var\cf3  win, usr, width= 500, height= 400, cnt= 0;\
+win= \cf4 Window\cf3 (\cf5 "structure1"\cf3 , \cf4 Rect\cf3 (200, 200, width, height));\
+usr= \cf4 UserView\cf3 (win, \cf4 Rect\cf3 (0, 0, width, height));\
+usr.background= \cf4 Color\cf3 .white;\
+usr.drawFunc= \{\
+	50.do\{\cf4 |x|\cf3 \
+		20.do\{\cf4 |y|\cf3 \
+			\cf4 Pen\cf3 .strokeColor= \cf4 Color\cf3 .grey(cnt%150/150, 0.5);\
+			\cf4 Pen\cf3 .strokeRect(\cf4 Rect\cf3 (x*10+cnt%width, y+x*7, 7*cnt%8, 50));\
+			\cf4 Pen\cf3 .fillColor= \cf4 Color\cf3 .grey(1-(cnt%150/150), 0.5);\
+			\cf4 Pen\cf3 .fillRect(\cf4 Rect\cf3 (x*~spread+cnt%width, y+x*7, 7*cnt%~haha+10, 25));\
+		\};\
+	\};\
+	cnt= cnt+1%300;	\cf2 //wrap conter 0-149\cf3 \
+\};\
+win.front;\
+\
+\cf4 Routine\cf3 (\{while(\{win.isClosed.not\}, \{usr.refresh; (1/30).wait\})\}).play(\cf4 AppClock\cf3 );\
+)\
+\
+~haha= 100\
+~spread= 100\
+~spread= -10\
+~haha= 900\
+\
+\
+\
+\
+\cf2 //-------------------------\cf3 \
+\cf2 //sound+video -> a little a/v composition\cf3 \
+\
+\
+\cf2 //--initialisation\cf3 \
+(\
+	\cf2 //create a synthdef\cf3 \
+	\cf4 SynthDef\cf3 (\cf5 "pulsesound0"\cf3 , \{\cf4 |freq= 500, amp= 0.5, filterFreq= 600, freqMax= 100|\cf3 \
+		\cf4 var\cf3  snd, filter, freqControl;\
+		freqControl= \cf4 LFPulse\cf3 .ar(6)*freqMax;\cf2 //0 or 100\cf3 \
+		snd= \cf4 LFPulse\cf3 .ar(freq+freqControl, 0, 0.7);\
+		filter= \cf4 MoogFF\cf3 .ar(snd, filterFreq);\
+		\cf4 Out\cf3 .ar(0, \cf4 Pan2\cf3 .ar(filter, 0));\
+	\}).send(s);\
+	\
+	\cf2 //prepare some variables\cf3 \
+	~haha= 50;\
+	~spread= 10;\
+)\
+\
+\cf2 //--main code\cf3 \
+(\
+\cf4 var\cf3  win, usr, width= 500, height= 400, cnt= 0, syn;\
+win= \cf4 Window\cf3 (\cf5 "soundstructure0"\cf3 , \cf4 Rect\cf3 (200, 200, width, height));\
+usr= \cf4 UserView\cf3 (win, \cf4 Rect\cf3 (0, 0, width, height));\
+usr.background= \cf4 Color\cf3 .white;\
+syn= \cf4 Synth\cf3 (\cf5 "pulsesound0"\cf3 );\
+usr.drawFunc= \{\
+	50.do\{\cf4 |x|\cf3 \
+		20.do\{\cf4 |y|\cf3 \
+			\cf4 Pen\cf3 .strokeColor= \cf4 Color\cf3 .grey(cnt%150/150, 0.5);\
+			\cf4 Pen\cf3 .strokeRect(\cf4 Rect\cf3 (x*10+cnt%width, y+x*7, 7*cnt%8, 50));\
+			\cf4 Pen\cf3 .fillColor= \cf4 Color\cf3 .grey(1-(cnt%150/150), 0.5);\
+			\cf4 Pen\cf3 .fillRect(\cf4 Rect\cf3 (x*~spread+cnt%width, y+x*7, 7*cnt%~haha+10, 25));\
+		\};\
+	\};\
+	syn.set(\cf6 \\freqMax\cf3 , cnt);\
+	syn.set(\cf6 \\filterFreq\cf3 , ~haha*10+100);\
+	syn.set(\cf6 \\freq\cf3 , ~spread*30);\
+	cnt= cnt+1%300;	\cf2 //wrap conter 0-299\cf3 \
+\};\
+win.front;\
+\
+\cf4 Routine\cf3 (\{while(\{win.isClosed.not\}, \{usr.refresh; (1/30).wait\})\}).play(\cf4 AppClock\cf3 );\
+)\
+\
+~haha= 200\
+~spread= 30\
+~haha= 30\
+~spread= 300\
+~haha= 580\
+~spread= 600\
+\cf0 ~haha= 85\
+~spread= 40\
+\cf3 \
+\
+\
+\
+\
+\cf2 //-------------------------\cf3 \
+\
+(	\cf2 //--initialisation\cf3 \
+	\cf2 //create a synthdef\cf3 \
+	\cf4 SynthDef\cf3 (\cf5 "pulsesound1"\cf3 , \{\cf4 |freq= 500, amp= 0.5, filterFreq= 600, freqMax= 100|\cf3 \
+		\cf4 var\cf3  snd, filter, freqControl;\
+		freqControl= \cf4 LFPulse\cf3 .ar(6)+\cf4 LFPulse\cf3 .ar(5)*freqMax;\cf2 //0 or 200\cf3 \
+		snd= \cf4 LFPulse\cf3 .ar(freq+freqControl, 0, 0.6);\
+		filter= \cf4 MoogFF\cf3 .ar(snd, filterFreq)*amp;\
+		\cf4 Out\cf3 .ar(0, \cf4 Pan2\cf3 .ar(filter, 0));\
+	\}).send(s);\
+	\
+	\cf2 //prepare some variables\cf3 \
+	~haha= 50;\
+	~spread= 10;\
+	~vol= 0.5;\
+	~mainFreq= 200;\
+)\
+\
+(	\cf2 //--main code\cf3 \
+\cf4 var\cf3  win, usr, width= 500, height= 400, cnt= 0, syn;\
+win= \cf4 Window\cf3 (\cf5 "soundstructure1"\cf3 , \cf4 Rect\cf3 (200, 200, width, height));\
+usr= \cf4 UserView\cf3 (win, \cf4 Rect\cf3 (0, 0, width, height));\
+usr.background= \cf4 Color\cf3 .white;\
+syn= \cf4 Synth\cf3 (\cf5 "pulsesound1"\cf3 );\
+usr.drawFunc= \{\
+	(40*~vol).do\{\cf4 |x|\cf3 \
+		42.do\{\cf4 |y|\cf3 \
+			\cf4 Pen\cf3 .strokeColor= \cf4 Color\cf3 .red(cnt%150/150, 0.5);\
+			\cf4 Pen\cf3 .strokeRect(\cf4 Rect\cf3 (x*10+cnt%width, y+x*7, 7*cnt%8, 50*~vol));\
+			\cf4 Pen\cf3 .fillColor= \cf4 Color\cf3 .grey(1-(cnt%150/150), 0.5);\
+			\cf4 Pen\cf3 .fillRect(\cf4 Rect\cf3 (x*~spread+cnt%width, y+x*7, 7*cnt%~haha+10, 25*~vol));\
+		\};\
+	\};\
+	syn.set(\cf6 \\freqMax\cf3 , ~haha);\
+	syn.set(\cf6 \\filterFreq\cf3 , cnt.fold(0, ~mainFreq)*10+100);\
+	syn.set(\cf6 \\freq\cf3 , ~mainFreq*(~vol+0.5));\
+	syn.set(\cf6 \\amp\cf3 , ~vol);\
+	cnt= cnt+1%~mainFreq;	\cf2 //wrap conter 0-199\cf3 \
+\};\
+win.front;\
+\
+\cf4 Routine\cf3 (\{while(\{win.isClosed.not\}, \{usr.refresh; (1/30).wait\})\}).play(\cf4 AppClock\cf3 );\
+)\
+\
+~vol= 1\
+~vol= 0.05\
+~vol= 0.5\
+~mainFreq= 100\
+~haha= 110\
+~spread= 200\
+\cf0 ~vol= 0.7\cf3 \
+}
