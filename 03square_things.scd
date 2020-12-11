@@ -106,7 +106,7 @@ usr.drawFunc= {
 	64.do{|index|
 		Pen.strokeColor= Color.white;
 		Pen.strokeRect(Rect(index%12*33, index.div(6)*23, 30, 20));
-		
+
 		//64 is total number of rectangles
 		//30 is rectangle width
 		//20 is rectangle height
@@ -373,7 +373,7 @@ Routine({while({win.isClosed.not}, {usr.refresh; (1/30).wait})}).play(AppClock);
 		filter= MoogFF.ar(snd, filterFreq);
 		Out.ar(0, Pan2.ar(filter, 0));
 	}).send(s);
-	
+
 	//prepare some variables
 	~haha= 50;
 	~spread= 10;
@@ -429,7 +429,7 @@ Routine({while({win.isClosed.not}, {usr.refresh; (1/30).wait})}).play(AppClock);
 		filter= MoogFF.ar(snd, filterFreq)*amp;
 		Out.ar(0, Pan2.ar(filter, 0));
 	}).send(s);
-	
+
 	//prepare some variables
 	~haha= 50;
 	~spread= 10;

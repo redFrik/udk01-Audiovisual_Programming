@@ -35,7 +35,7 @@ a= 0; 7.do{a= a+1}; a.postln;//increase 'a' 7 times
 
 //radians...
 0 radians = 0
-1 radians Å 6.28... = 2pi
+1 radians â‰ˆ 6.28... = 2pi
 
 0.5pi
 1pi
@@ -48,7 +48,7 @@ sin(phase)	//output values between -1.0 and 1.0 as phase goes from 0 to 2pi
 
 sin(0)	 	//= 0		//beginning of circle (right hand side, y= 0)
 sin(0.5pi)	//= 1		//spinning anti-clock wise to top of circle (y= 1)
-sin(1pi)	 	//= 0		//half way (left hand side, y= 0)
+sin(1pi)	//= 0		//half way (left hand side, y= 0)
 sin(1.5pi)	//= -1		//bottom of circle (y= -1)
 
 
@@ -62,11 +62,11 @@ usr.background= Color.white;
 cnt= 0;
 usr.drawFunc= {
 	Pen.strokeColor= Color.red;
-	
+
 	Pen.addOval(Rect(sin(cnt/50)*75+150, 150, 30, 30));
 	Pen.line(Point(150, 150), Point(150, sin(cnt/50)*75+150));
 	cnt= cnt+1;
-	
+
 	Pen.stroke;
 };
 
@@ -85,11 +85,11 @@ usr.background= Color.white;
 cnt= 0;
 usr.drawFunc= {
 	Pen.strokeColor= Color(1.0.rand, 0.4.rand, 0.5.rand);
-	
+
 	Pen.addOval(Rect(sin(cnt/50)*75+150, cos(cnt/50)*75+150, 30, 30));
 	Pen.line(Point(150, 150), Point(150, sin(cnt/50)*75+150));
 	cnt= cnt+1;
-	
+
 	Pen.stroke;
 };
 
@@ -115,7 +115,7 @@ cnt= 0;
 usr.drawFunc= {
 	Pen.width= 2;
 	Pen.strokeColor= Color.black;
-	
+
 	phase= cnt/30;	//radians (0 to 2pi)
 	40.do{|x|
 		Pen.addOval(Rect(sin(phase+(x*0.1))*75+150, cos(phase+(x*0.4))*50+150, x*5+50, x*10+10));
@@ -139,7 +139,7 @@ usr.background= Color.white;
 cnt= 0;
 usr.drawFunc= {
 	Pen.width= 2;
-	
+
 	phase= cnt/30;	//radians (0 to 2pi)
 	40.do{|x|
 		Pen.fillColor= Color.grey(1-(x/40), 0.1);
@@ -365,7 +365,7 @@ Routine({while({win.isClosed.not}, {usr.refresh; (1/30).wait})}).play(AppClock);
 )
 
 updown				//gives values between -1 and 1
-(updown*0.5+0.5)		//gives values between 0 and 1
+(updown*0.5+0.5)	//gives values between 0 and 1
 
 
 
@@ -523,7 +523,7 @@ a= {Synth("sine3")}.dup(40);
 cnt= 0;
 usr.drawFunc= {
 	Pen.width= 2;
-	
+
 	phase= cnt/30;	//radians (0 to 2pi)
 	40.do{|x|
 		Pen.fillColor= Color.grey(1-(x/40), 0.3);

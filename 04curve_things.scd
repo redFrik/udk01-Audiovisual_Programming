@@ -329,7 +329,7 @@ usr= UserView(win, Rect(0, 0, width, height));
 usr.background= Color.white;
 usr.drawFunc= {
 	Pen.fillColor= Color.grey;
-	
+
 	Pen.strokeColor= Color.red;
 	if(cnt%8==0, {
 		Synth("env6", [\freq, 120]);
@@ -339,7 +339,7 @@ usr.drawFunc= {
 	Pen.moveTo(Point(width/2, height/2));
 	Pen.lineTo(Point(cnt%8*80+25, 100));
 	Pen.stroke;
-	
+
 	Pen.strokeColor= Color.green;
 	if(cnt%12==0, {
 		Synth("env6", [\freq, 440]);
@@ -349,7 +349,7 @@ usr.drawFunc= {
 	Pen.moveTo(Point(width/2, height/2));
 	Pen.lineTo(Point(cnt%12*80+25, 180));
 	Pen.stroke;
-	
+
 	Pen.strokeColor= Color.blue;
 	if(cnt%5==0, {
 		Synth("env6", [\freq, 900]);
@@ -359,7 +359,7 @@ usr.drawFunc= {
 	Pen.moveTo(Point(width/2, height/2));
 	Pen.lineTo(Point(cnt%5*80+25, 360));
 	Pen.stroke;
-	
+
 	cnt= cnt+1;
 };
 win.front;
@@ -377,7 +377,7 @@ usr.background= Color.white;
 control= Point(width/2, 0);
 step= 10;
 usr.drawFunc= {
-	
+
 	if(cnt%32==0, {
 		step= 50.rand;
 		Synth("env6", [\freq, step*25+180, \mod, step, \matk, 0.1, \rel, 1]);
@@ -391,7 +391,7 @@ usr.drawFunc= {
 	Pen.moveTo(Point(20, height/2));
 	Pen.quadCurveTo(Point(width-20, height/2), control*0.5);
 	Pen.stroke;
-	
+
 	cnt= cnt+1;
 	control= Point(control.x, control.y+step);
 };
