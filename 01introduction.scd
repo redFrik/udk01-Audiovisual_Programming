@@ -66,7 +66,7 @@ http://asmir.theremin.ru/gsound1.htm
 
 //--------------------------
 until next time please read...
-http://www.fredrikolofsson.com/f0blog/?q=node/316
+https://fredrikolofsson.com/f0blog/audiovisuals-with-sc/
 
 
 
